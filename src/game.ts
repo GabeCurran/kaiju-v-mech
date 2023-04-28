@@ -224,7 +224,8 @@ export default class MainScene extends Phaser.Scene
             if (player === 1) {
                 if (button === player1Button) {
                     buttonStates[0] = true;
-                } else if (player1ButtonList.indexOf(button) !== -1) {
+                    // If the player pressed the wrong button, move them backwards.
+                } else if (player1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -232,10 +233,11 @@ export default class MainScene extends Phaser.Scene
                     }
                 }
             }
+            // Repeat for player 2, 3, and 4.
             if (player === 2) {
                 if (button === player2Button) {
                     buttonStates[1] = true;
-                } else if (player2ButtonList.indexOf(button) !== -1) {
+                } else if (player2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -246,7 +248,7 @@ export default class MainScene extends Phaser.Scene
             if (player === 3) {
                 if (button === player3Button) {
                     buttonStates[2] = true;
-                } else if (player3ButtonList.indexOf(button) !== -1) {
+                } else if (player3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -257,7 +259,7 @@ export default class MainScene extends Phaser.Scene
             if (player === 4) {
                 if (button === player4Button) {
                     buttonStates[3] = true;
-                } else if (player4ButtonList.indexOf(button) !== -1) {
+                } else if (player4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
