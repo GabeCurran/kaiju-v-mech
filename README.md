@@ -1,4 +1,6 @@
-# Phaser 3 TypeScript Project Template
+# Kaiju vs. Mecha
+
+This is a 2v2 web-based video game using Phaser.js and TypeScript.
 
 This quick-start project template combines Phaser 3.60 with [TypeScript 5](https://www.typescriptlang.org/) and uses [Rollup](https://rollupjs.org) for bundling.
 
