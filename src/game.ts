@@ -225,10 +225,10 @@ export default class MainScene extends Phaser.Scene
                 if (button === player1Button) {
                     buttonStates[0] = true;
                 } else if (player1ButtonList.indexOf(button) !== -1) {
-                    if (kaiju.x > 140) {
-                        kaiju.x -= 100;
+                    if (kaiju.x > 280) {
+                        kaiju.x -= 200;
                     } else {
-                        kaiju.x = 40;
+                        kaiju.x = 80;
                     }
                 }
             }
@@ -236,10 +236,10 @@ export default class MainScene extends Phaser.Scene
                 if (button === player2Button) {
                     buttonStates[1] = true;
                 } else if (player2ButtonList.indexOf(button) !== -1) {
-                    if (kaiju.x > 140) {
-                        kaiju.x -= 100;
+                    if (kaiju.x > 280) {
+                        kaiju.x -= 200;
                     } else {
-                        kaiju.x = 40;
+                        kaiju.x = 80;
                     }
                 }
             }
@@ -247,10 +247,10 @@ export default class MainScene extends Phaser.Scene
                 if (button === player3Button) {
                     buttonStates[2] = true;
                 } else if (player3ButtonList.indexOf(button) !== -1) {
-                    if (mecha.x > 140) {
-                        mecha.x -= 100;
+                    if (mecha.x > 280) {
+                        mecha.x -= 200;
                     } else {
-                        mecha.x = 40;
+                        mecha.x = 80;
                     }
                 }
             }
@@ -258,10 +258,10 @@ export default class MainScene extends Phaser.Scene
                 if (button === player4Button) {
                     buttonStates[3] = true;
                 } else if (player4ButtonList.indexOf(button) !== -1) {
-                    if (mecha.x > 140) {
-                        mecha.x -= 100;
+                    if (mecha.x > 280) {
+                        mecha.x -= 200;
                     } else {
-                        mecha.x = 40;
+                        mecha.x = 80;
                     }
                 }
             }
@@ -299,11 +299,11 @@ export default class MainScene extends Phaser.Scene
         function moveCharacter(team) {
             if (team === 'kaiju') {
                 // Move the kaiju forward by moving the sprite forward by 10 pixels.
-                kaiju.x += 50;
+                kaiju.x += 100;
             }
             if (team === 'mecha') {
                 // Move the mecha forward.
-                mecha.x += 50;
+                mecha.x += 100;
             }
         }
 
@@ -328,9 +328,9 @@ export default class MainScene extends Phaser.Scene
 
     update ()
     {
-        if (this.kaiju.x >= 700 || this.mecha.x >= 700) {
-            this.kaiju.x = 40;
-            this.mecha.x = 40;
+        if (this.kaiju.x >= 1400 || this.mecha.x >= 1400) {
+            this.kaiju.x = 80;
+            this.mecha.x = 80;
         }
     }
 }
