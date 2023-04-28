@@ -34,6 +34,7 @@ export default class MainScene extends Phaser.Scene
     seven: Phaser.GameObjects.Sprite;
     six: Phaser.GameObjects.Sprite;
     gameStart: boolean;
+    background: Phaser.GameObjects.Sprite;
     constructor ()
     {
         super('MainScene');
@@ -80,55 +81,56 @@ export default class MainScene extends Phaser.Scene
 
         // We will use ocean sprites as a placeholder until we have our own art.
         // Create the ocean background.
-        this.add.image(380, 150, 'ocean');
+        this.background = this.add.sprite(760, 300, 'ocean');
+        this.background.setScale(2.0);
 
-        this.kaiju = this.add.sprite(40, 50, 'kaiju');
-        this.kaiju.setScale(1.0);
+        this.kaiju = this.add.sprite(80, 100, 'kaiju');
+        this.kaiju.setScale(2.0);
 
-        this.mecha = this.add.sprite(40, 170, 'mecha');
-        this.mecha.setScale(1.0);
+        this.mecha = this.add.sprite(80, 340, 'mecha');
+        this.mecha.setScale(2.0);
 
         // Create the buttons and button sprites.
 
         // Player 1 buttons.
-        this.w = this.add.sprite(100, 300, 'w');
-        this.w.setScale(0.75);
-        this.a = this.add.sprite(60, 340, 'a');
-        this.a.setScale(0.75);
-        this.s = this.add.sprite(100, 340, 's');
-        this.s.setScale(0.75);
-        this.d = this.add.sprite(140, 340, 'd');
-        this.d.setScale(0.75);
+        this.w = this.add.sprite(200, 600, 'w');
+        this.w.setScale(1.5);
+        this.a = this.add.sprite(120, 680, 'a');
+        this.a.setScale(1.5);
+        this.s = this.add.sprite(200, 680, 's');
+        this.s.setScale(1.5);
+        this.d = this.add.sprite(280, 680, 'd');
+        this.d.setScale(1.5);
         
         // Player 2 buttons.
-        this.one = this.add.sprite(260, 300, '1');
-        this.one.setScale(0.75);
-        this.two = this.add.sprite(220, 340, '2');
-        this.two.setScale(0.75);
-        this.three = this.add.sprite(260, 340, '3');
-        this.three.setScale(0.75);
-        this.four = this.add.sprite(300, 340, '4');
-        this.four.setScale(0.75);
+        this.one = this.add.sprite(520, 600, '1');
+        this.one.setScale(1.5);
+        this.two = this.add.sprite(440, 680, '2');
+        this.two.setScale(1.5);
+        this.three = this.add.sprite(520, 680, '3');
+        this.three.setScale(1.5);
+        this.four = this.add.sprite(600, 680, '4');
+        this.four.setScale(1.5);
         
         // Player 3 buttons.
-        this.up = this.add.sprite(440, 300, 'ArrowUp');
-        this.up.setScale(0.75);
-        this.left = this.add.sprite(400, 340, 'ArrowLeft');
-        this.left.setScale(0.75);
-        this.down = this.add.sprite(440, 340, 'ArrowDown');
-        this.down.setScale(0.75);
-        this.right = this.add.sprite(480, 340, 'ArrowRight');
-        this.right.setScale(0.75);
+        this.up = this.add.sprite(880, 600, 'ArrowUp');
+        this.up.setScale(1.5);
+        this.left = this.add.sprite(800, 680, 'ArrowLeft');
+        this.left.setScale(1.5);
+        this.down = this.add.sprite(880, 680, 'ArrowDown');
+        this.down.setScale(1.5);
+        this.right = this.add.sprite(960, 680, 'ArrowRight');
+        this.right.setScale(1.5);
         
         // Player 4 buttons.
-        this.nine = this.add.sprite(620, 300, '9');
-        this.nine.setScale(0.75);
-        this.eight = this.add.sprite(580, 340, '8');
-        this.eight.setScale(0.75);
-        this.seven = this.add.sprite(620, 340, '7');
-        this.seven.setScale(0.75);
-        this.six = this.add.sprite(660, 340, '6');
-        this.six.setScale(0.75);
+        this.nine = this.add.sprite(1240, 600, '9');
+        this.nine.setScale(1.5);
+        this.eight = this.add.sprite(1160, 680, '8');
+        this.eight.setScale(1.5);
+        this.seven = this.add.sprite(1240, 680, '7');
+        this.seven.setScale(1.5);
+        this.six = this.add.sprite(1320, 680, '6');
+        this.six.setScale(1.5);
 
         // Create group for the buttons.
         this.buttons = this.add.group();
@@ -161,10 +163,10 @@ export default class MainScene extends Phaser.Scene
         let mecha = this.mecha;
 
         // Create the text for the game
-        this.add.text(60, 255, 'Player 1', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(220, 255, 'Player 2', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(400, 255, 'Player 3', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(560, 255, 'Player 4', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
+        this.add.text(160, 510, 'Player 1', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
+        this.add.text(480, 510, 'Player 2', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
+        this.add.text(840, 510, 'Player 3', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
+        this.add.text(1200, 510, 'Player 4', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
 
         let player1Button: string;
         let player2Button: string;
@@ -222,21 +224,45 @@ export default class MainScene extends Phaser.Scene
             if (player === 1) {
                 if (button === player1Button) {
                     buttonStates[0] = true;
+                } else if (player1ButtonList.indexOf(button) !== -1) {
+                    if (kaiju.x > 140) {
+                        kaiju.x -= 100;
+                    } else {
+                        kaiju.x = 40;
+                    }
                 }
             }
             if (player === 2) {
                 if (button === player2Button) {
                     buttonStates[1] = true;
+                } else if (player2ButtonList.indexOf(button) !== -1) {
+                    if (kaiju.x > 140) {
+                        kaiju.x -= 100;
+                    } else {
+                        kaiju.x = 40;
+                    }
                 }
             }
             if (player === 3) {
                 if (button === player3Button) {
                     buttonStates[2] = true;
+                } else if (player3ButtonList.indexOf(button) !== -1) {
+                    if (mecha.x > 140) {
+                        mecha.x -= 100;
+                    } else {
+                        mecha.x = 40;
+                    }
                 }
             }
             if (player === 4) {
                 if (button === player4Button) {
                     buttonStates[3] = true;
+                } else if (player4ButtonList.indexOf(button) !== -1) {
+                    if (mecha.x > 140) {
+                        mecha.x -= 100;
+                    } else {
+                        mecha.x = 40;
+                    }
                 }
             }
         }
@@ -312,8 +338,8 @@ export default class MainScene extends Phaser.Scene
 const config = {
     type: Phaser.AUTO,
     backgroundColor: '#3e79dd',
-    width: 760,
-    height: 435,
+    width: 1520,
+    height: 870,
     scene: MainScene
 };
 
