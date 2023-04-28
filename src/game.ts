@@ -248,7 +248,6 @@ export default class MainScene extends Phaser.Scene
                 moveCharacter('kaiju');
                 buttonStates[0] = false;
                 buttonStates[1] = false;
-                hideButtons(player1Button, player2Button);
                 generateButton(1);
                 generateButton(2);
             }
@@ -257,9 +256,16 @@ export default class MainScene extends Phaser.Scene
                 moveCharacter('mecha');
                 buttonStates[2] = false;
                 buttonStates[3] = false;
-                hideButtons(player3Button, player4Button);
                 generateButton(3);
                 generateButton(4);
+            }
+            for (let button of buttons) {
+                if (button.texture.key === player1Button || button.texture.key === player2Button || button.texture.key === player3Button || button.texture.key === player4Button) {
+                    button.setVisible(true);
+                }
+                else (
+                    button.setVisible(false)
+                )
             }
         }
 
@@ -280,14 +286,6 @@ export default class MainScene extends Phaser.Scene
             for (let button of buttons) {
                 if (button.texture.key === player1Button || button.texture.key === player2Button || button.texture.key === player3Button || button.texture.key === player4Button) {
                     button.setVisible(true);
-                }
-            }
-        }
-
-        function hideButtons(button1, button2) {
-            for (let button of buttons) {
-                if (button.texture.key === button1 || button.texture.key === button2) {
-                    button.setVisible(false);
                 }
             }
         }
