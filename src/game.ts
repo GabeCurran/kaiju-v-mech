@@ -168,15 +168,15 @@ export default class MainScene extends Phaser.Scene
         this.add.text(840, 510, 'Player 3', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
         this.add.text(1200, 510, 'Player 4', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
 
-        let player1Button: string;
-        let player2Button: string;
-        let player3Button: string;
-        let player4Button: string;
+        let p1Button: string;
+        let p2Button: string;
+        let p3Button: string;
+        let p4Button: string;
 
-        const player1ButtonList = ['w', 'a', 's', 'd'];
-        const player2ButtonList = ['1', '2', '3', '4'];
-        const player3ButtonList = ['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
-        const player4ButtonList = ['9', '8', '7', '6'];
+        const p1ButtonList = ['w', 'a', 's', 'd'];
+        const p2ButtonList = ['1', '2', '3', '4'];
+        const p3ButtonList = ['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
+        const p4ButtonList = ['9', '8', '7', '6'];
 
         let buttons = [this.w, this.a, this.s, this.d, this.one, this.two, this.three, this.four, this.up, this.left, this.down, this.right, this.nine, this.eight, this.seven, this.six];
 
@@ -202,16 +202,16 @@ export default class MainScene extends Phaser.Scene
 
             // Assign the button to the player.
                 if (player === 1) {
-                    player1Button = player1ButtonList[randomNumber];
+                    p1Button = p1ButtonList[randomNumber];
                 }
                 if (player === 2) {
-                    player2Button = player2ButtonList[randomNumber];
+                    p2Button = p2ButtonList[randomNumber];
                 }
                 if (player === 3) {
-                    player3Button = player3ButtonList[randomNumber];
+                    p3Button = p3ButtonList[randomNumber];
                 }
                 if (player === 4) {
-                    player4Button = player4ButtonList[randomNumber];
+                    p4Button = p4ButtonList[randomNumber];
                 }
 
             // Display the button on the screen.
@@ -222,10 +222,10 @@ export default class MainScene extends Phaser.Scene
         function checkButton(player, button) {
             // Check if the player pressed the correct button.
             if (player === 1) {
-                if (button === player1Button) {
+                if (button === p1Button) {
                     buttonStates[0] = true;
                     // If the player pressed the wrong button, move them backwards.
-                } else if (player1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false) {
+                } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -235,9 +235,9 @@ export default class MainScene extends Phaser.Scene
             }
             // Repeat for player 2, 3, and 4.
             if (player === 2) {
-                if (button === player2Button) {
+                if (button === p2Button) {
                     buttonStates[1] = true;
-                } else if (player2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false) {
+                } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -246,9 +246,9 @@ export default class MainScene extends Phaser.Scene
                 }
             }
             if (player === 3) {
-                if (button === player3Button) {
+                if (button === p3Button) {
                     buttonStates[2] = true;
-                } else if (player3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false) {
+                } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -257,9 +257,9 @@ export default class MainScene extends Phaser.Scene
                 }
             }
             if (player === 4) {
-                if (button === player4Button) {
+                if (button === p4Button) {
                     buttonStates[3] = true;
-                } else if (player4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false) {
+                } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -288,7 +288,7 @@ export default class MainScene extends Phaser.Scene
                 generateButton(4);
             }
             for (let button of buttons) {
-                if (button.texture.key === player1Button || button.texture.key === player2Button || button.texture.key === player3Button || button.texture.key === player4Button) {
+                if (button.texture.key === p1Button || button.texture.key === p2Button || button.texture.key === p3Button || button.texture.key === p4Button) {
                     button.setVisible(true);
                 }
                 else (
@@ -312,7 +312,7 @@ export default class MainScene extends Phaser.Scene
         // Create function to display the current randomly generated buttons.
         function displayButtons() {
             for (let button of buttons) {
-                if (button.texture.key === player1Button || button.texture.key === player2Button || button.texture.key === player3Button || button.texture.key === player4Button) {
+                if (button.texture.key === p1Button || button.texture.key === p2Button || button.texture.key === p3Button || button.texture.key === p4Button) {
                     button.setVisible(true);
                 }
             }
