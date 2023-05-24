@@ -35,6 +35,9 @@ export default class MainScene extends Phaser.Scene
     six: Phaser.GameObjects.Sprite;
     gameStart: boolean;
     background: Phaser.GameObjects.Sprite;
+    car: Phaser.GameObjects.Sprite;
+    mechaWin: Phaser.GameObjects.Sprite;
+    kaijuWin: Phaser.GameObjects.Sprite;
     constructor ()
     {
         super('MainScene');
@@ -47,7 +50,14 @@ export default class MainScene extends Phaser.Scene
         // Load the background.
         this.load.image('city', 'assets/city/city.png');
 
-        // Load the sprites.
+        // Load the win screens.
+        this.load.image('mechaWin', 'assets/city/mechaWin.png');
+        this.load.image('kaijuWin', 'assets/city/kaijuWin.png');
+
+        // Load the obstacles.
+        this.load.image('car', 'assets/city/car.png');
+
+        // Load the characters.
         this.load.image('mecha', 'assets/city/mech.png');
         this.load.image('kaiju', 'assets/city/kaiju.png');
 
@@ -83,6 +93,8 @@ export default class MainScene extends Phaser.Scene
         // Create the ocean background.
         this.background = this.add.sprite(760, 450, 'city');
         this.background.setScale(1.75);
+        this.car = this.add.sprite(800, 550, 'car');
+        this.car.setScale(0.10);
 
         this.mecha = this.add.sprite(160, 450, 'mecha');
         this.mecha.setScale(0.15);
@@ -156,6 +168,7 @@ export default class MainScene extends Phaser.Scene
         this.buttons.add(this.seven);
         this.buttons.add(this.six);
 
+
         // Hide the buttons.
         this.buttons.setVisible(false);
 
@@ -171,6 +184,17 @@ export default class MainScene extends Phaser.Scene
         // Create the team names, Kaiju between Player 1 and Player 2, and Mecha between Player 3 and Player 4.
         this.add.text(290, 650, 'Team Kaiju', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
         this.add.text(980, 650, 'Team Mecha', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
+
+        // Create the win screens.
+        this.mechaWin = this.add.sprite(740, 450, 'mechaWin');
+        this.mechaWin.setScale(0.50);
+
+        this.kaijuWin = this.add.sprite(740, 450, 'kaijuWin');
+        this.kaijuWin.setScale(0.50);
+
+        // Hide the win screens.
+        this.mechaWin.setVisible(false);
+        this.kaijuWin.setVisible(false);
 
         let p1Button: string;
         let p2Button: string;
@@ -250,8 +274,6 @@ export default class MainScene extends Phaser.Scene
                     p4Pressed = false;
                 }
 
-            // Display the button on the screen.
-            displayButtons();
         }
 
         // Create function to check if the player pressed the correct button and update the button state.
@@ -384,6 +406,7 @@ export default class MainScene extends Phaser.Scene
         function displayButtons() {
             for (let button of buttons) {
                 if (button.texture.key === p1Button || button.texture.key === p2Button || button.texture.key === p3Button || button.texture.key === p4Button) {
+                    button.setVisible(true);
                 }
             }
         }
@@ -394,6 +417,8 @@ export default class MainScene extends Phaser.Scene
             generateButton(2);
             generateButton(3);
             generateButton(4);
+            // Display the button on the screen.
+            displayButtons();
             this.gameStart = true;
         }
     }
@@ -401,6 +426,12 @@ export default class MainScene extends Phaser.Scene
     update ()
     {
         if (this.kaiju.x >= 1400 || this.mecha.x >= 1400) {
+            if (this.mecha.x >= 1400) {
+                this.mechaWin.setVisible(true);
+            }
+            if (this.kaiju.x >= 1400) {
+                this.kaijuWin.setVisible(true);
+            }
             this.kaiju.x = 160;
             this.mecha.x = 160;
         }
@@ -410,8 +441,8 @@ export default class MainScene extends Phaser.Scene
 const config = {
     type: Phaser.AUTO,
     backgroundColor: '#7b6e61',
-    width: 1520,
-    height: 870,
+    width: 1480,
+    height: 1000,
     scene: MainScene
 };
 
