@@ -168,6 +168,10 @@ export default class MainScene extends Phaser.Scene
         this.add.text(840, 680, 'Player 3', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
         this.add.text(1200, 680, 'Player 4', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
 
+        // Create the team names, Kaiju between Player 1 and Player 2, and Mecha between Player 3 and Player 4.
+        this.add.text(290, 650, 'Team Kaiju', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
+        this.add.text(980, 650, 'Team Mecha', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
+
         let p1Button: string;
         let p2Button: string;
         let p3Button: string;
