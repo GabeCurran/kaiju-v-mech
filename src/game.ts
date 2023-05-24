@@ -38,6 +38,10 @@ export default class MainScene extends Phaser.Scene
     car: Phaser.GameObjects.Sprite;
     mechaWin: Phaser.GameObjects.Sprite;
     kaijuWin: Phaser.GameObjects.Sprite;
+    objectDestroyed: boolean;
+    objectHits: number;
+    mecha2: Phaser.GameObjects.Sprite;
+    kaiju2: Phaser.GameObjects.Sprite;
     constructor ()
     {
         super('MainScene');
@@ -60,6 +64,10 @@ export default class MainScene extends Phaser.Scene
         // Load the characters.
         this.load.image('mecha', 'assets/city/mech.png');
         this.load.image('kaiju', 'assets/city/kaiju.png');
+
+        // Load the character animations.
+        this.load.image('mecha2', 'assets/city/mech2.png');
+        this.load.image('kaiju2', 'assets/city/kaiju2.png');
 
         // Load the buttons.
         this.load.image('w', 'assets/buttons/w.png');
@@ -93,7 +101,10 @@ export default class MainScene extends Phaser.Scene
         // Create the ocean background.
         this.background = this.add.sprite(760, 450, 'city');
         this.background.setScale(1.75);
-        this.car = this.add.sprite(800, 550, 'car');
+
+        const objectPosition : number = 800;
+
+        this.car = this.add.sprite(objectPosition, 550, 'car');
         this.car.setScale(0.10);
 
         this.mecha = this.add.sprite(160, 450, 'mecha');
@@ -101,6 +112,17 @@ export default class MainScene extends Phaser.Scene
 
         this.kaiju = this.add.sprite(160, 500, 'kaiju');
         this.kaiju.setScale(0.15);
+
+        // Create the animations for the characters.
+        this.mecha2 = this.add.sprite((objectPosition - 120), 450, 'mecha2');
+        this.mecha2.setScale(0.20);
+
+        this.kaiju2 = this.add.sprite((objectPosition - 120), 500, 'kaiju2');
+        this.kaiju2.setScale(0.20);
+
+        // Hide the animations.
+        this.mecha2.setVisible(false);
+        this.kaiju2.setVisible(false);
 
         // Create the buttons and button sprites.
 
@@ -196,6 +218,9 @@ export default class MainScene extends Phaser.Scene
         this.mechaWin.setVisible(false);
         this.kaijuWin.setVisible(false);
 
+        this.objectDestroyed = false;
+        this.objectHits = 0;
+
         let p1Button: string;
         let p2Button: string;
         let p3Button: string;
@@ -234,7 +259,7 @@ export default class MainScene extends Phaser.Scene
         });
 
         // Create function to generate a random button, then assign it.
-        function generateButton(player) {
+        function generateButton(player : number) {
 
             // Assign the button to the player.
                 if (player === 1) {
@@ -277,7 +302,7 @@ export default class MainScene extends Phaser.Scene
         }
 
         // Create function to check if the player pressed the correct button and update the button state.
-        function checkButton(player, button) {
+        function checkButton(player : number, button : string) {
             // Check if the player pressed the correct button.
             if (player === 1) {
                 if (button === p1Button) {
@@ -289,7 +314,7 @@ export default class MainScene extends Phaser.Scene
                         }
                     }
                 // If the player pressed the wrong button, move them backwards.
-                } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false) {
+                } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false && this.objectHits === 0) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -307,7 +332,7 @@ export default class MainScene extends Phaser.Scene
                             p2Pressed = true;
                         }
                     }
-                } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false) {
+                } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false && this.objectHits === 0) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -324,7 +349,7 @@ export default class MainScene extends Phaser.Scene
                             p3Pressed = true;
                         }
                     }
-                } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false) {
+                } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false && this.objectHits === 0) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -341,7 +366,7 @@ export default class MainScene extends Phaser.Scene
                             p4Pressed = true;
                         }
                     }
-                } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false) {
+                } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false && this.objectHits === 0) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -391,13 +416,13 @@ export default class MainScene extends Phaser.Scene
         }
 
         // Create function to move the characters forward.
-        function moveCharacter(team) {
+        function moveCharacter(team : string) {
             if (team === 'kaiju') {
                 // Move the kaiju forward by moving the sprite forward by 10 pixels.
                 kaiju.x += 100;
             }
             if (team === 'mecha') {
-                // Move the mecha forward.
+                // Move the mecha forward by moving the sprite forward by 10 pixels.
                 mecha.x += 100;
             }
         }
@@ -419,12 +444,44 @@ export default class MainScene extends Phaser.Scene
             generateButton(4);
             // Display the button on the screen.
             displayButtons();
+            this.objectDestroyed = false;
             this.gameStart = true;
         }
     }
 
     update ()
     {
+
+        // Check if the kaiju or mecha has collided with an obstacle.
+        if (this.kaiju.x >= (this.car.x - 100)) {
+            if (this.objectDestroyed === false) {
+                this.kaiju.setVisible(false);
+                this.kaiju2.setVisible(true);
+                this.kaiju.x = (this.car.x - 120);
+                this.objectHits++;
+            }
+        }
+
+        if (this.mecha.x >= (this.car.x - 100)) {
+            if (this.objectDestroyed === false) {
+                this.mecha.setVisible(false);
+                this.mecha2.setVisible(true);
+                this.mecha.x = (this.car.x - 120);
+                this.objectHits++;
+            }
+        }
+
+        if (this.objectHits >= 3) {
+            this.objectDestroyed = true;
+            this.objectHits = 0;
+            this.mecha.setVisible(true);
+            this.mecha2.setVisible(false);
+            this.kaiju.setVisible(true);
+            this.kaiju2.setVisible(false);
+            this.car.destroy();
+        }
+
+        // Check if the kaiju or mecha has reached the end of the track.
         if (this.kaiju.x >= 1400 || this.mecha.x >= 1400) {
             if (this.mecha.x >= 1400) {
                 this.mechaWin.setVisible(true);
