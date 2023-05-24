@@ -177,6 +177,11 @@ export default class MainScene extends Phaser.Scene
         let p2LastButton: string;
         let p3LastButton: string;
         let p4LastButton: string;
+
+        let p1Pressed: boolean;
+        let p2Pressed: boolean;
+        let p3Pressed: boolean;
+        let p4Pressed: boolean;
         
         const p1ButtonList = ['w', 'a', 's', 'd'];
         const p2ButtonList = ['1', '2', '3', '4'];
@@ -211,6 +216,7 @@ export default class MainScene extends Phaser.Scene
                     }
                     p1Button = button;
                     p1LastButton = button;
+                    p1Pressed = false;
                 }
                 if (player === 2) {
                     let button = p2ButtonList[Math.floor(Math.random() * p2ButtonList.length)];
@@ -219,6 +225,7 @@ export default class MainScene extends Phaser.Scene
                     }
                     p2Button = button;
                     p2LastButton = button;
+                    p2Pressed = false;
                 }
                 if (player === 3) {
                     let button = p3ButtonList[Math.floor(Math.random() * p3ButtonList.length)];
@@ -227,6 +234,7 @@ export default class MainScene extends Phaser.Scene
                     }
                     p3Button = button;
                     p3LastButton = button;
+                    p3Pressed = false;
                 }
                 if (player === 4) {
                     let button = p4ButtonList[Math.floor(Math.random() * p4ButtonList.length)];
@@ -235,6 +243,7 @@ export default class MainScene extends Phaser.Scene
                     }
                     p4Button = button;
                     p4LastButton = button;
+                    p4Pressed = false;
                 }
 
             // Display the button on the screen.
@@ -247,6 +256,12 @@ export default class MainScene extends Phaser.Scene
             if (player === 1) {
                 if (button === p1Button) {
                     buttonStates[0] = true;
+                    for (let button of buttons) {
+                        if (button.texture.key === p1Button) {
+                            button.setVisible(false);
+                            p1Pressed = true;
+                        }
+                    }
                 // If the player pressed the wrong button, move them backwards.
                 } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false) {
                     if (kaiju.x > 280) {
@@ -260,6 +275,12 @@ export default class MainScene extends Phaser.Scene
             if (player === 2) {
                 if (button === p2Button) {
                     buttonStates[1] = true;
+                    for (let button of buttons) {
+                        if (button.texture.key === p2Button) {
+                            button.setVisible(false);
+                            p2Pressed = true;
+                        }
+                    }
                 } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
@@ -271,6 +292,12 @@ export default class MainScene extends Phaser.Scene
             if (player === 3) {
                 if (button === p3Button) {
                     buttonStates[2] = true;
+                    for (let button of buttons) {
+                        if (button.texture.key === p3Button) {
+                            button.setVisible(false);
+                            p3Pressed = true;
+                        }
+                    }
                 } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
@@ -282,6 +309,12 @@ export default class MainScene extends Phaser.Scene
             if (player === 4) {
                 if (button === p4Button) {
                     buttonStates[3] = true;
+                    for (let button of buttons) {
+                        if (button.texture.key === p4Button) {
+                            button.setVisible(false);
+                            p4Pressed = true;
+                        }
+                    }
                 } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
@@ -312,7 +345,18 @@ export default class MainScene extends Phaser.Scene
             }
             for (let button of buttons) {
                 if (button.texture.key === p1Button || button.texture.key === p2Button || button.texture.key === p3Button || button.texture.key === p4Button) {
-                    button.setVisible(true);
+                    if (button.texture.key === p1Button && p1Pressed === false) {
+                        button.setVisible(true);
+                    }
+                    if (button.texture.key === p2Button && p2Pressed === false) {
+                        button.setVisible(true);
+                    }
+                    if (button.texture.key === p3Button && p3Pressed === false) {
+                        button.setVisible(true);
+                    }
+                    if (button.texture.key === p4Button && p4Pressed === false) {
+                        button.setVisible(true);
+                    }
                 }
                 else (
                     button.setVisible(false)
@@ -336,7 +380,6 @@ export default class MainScene extends Phaser.Scene
         function displayButtons() {
             for (let button of buttons) {
                 if (button.texture.key === p1Button || button.texture.key === p2Button || button.texture.key === p3Button || button.texture.key === p4Button) {
-                    button.setVisible(true);
                 }
             }
         }
