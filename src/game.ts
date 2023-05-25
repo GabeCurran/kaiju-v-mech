@@ -37,7 +37,7 @@ export default class MainScene extends Phaser.Scene
     six: Phaser.GameObjects.Sprite;
     gameStart: boolean;
     background: Phaser.GameObjects.Sprite;
-    car: Phaser.GameObjects.Sprite;
+    trash: Phaser.GameObjects.Sprite;
     mechaWin: Phaser.GameObjects.Sprite;
     kaijuWin: Phaser.GameObjects.Sprite;
     objectDestroyed: boolean;
@@ -54,6 +54,7 @@ export default class MainScene extends Phaser.Scene
     mechaPlayer2: Phaser.GameObjects.Sprite;
     kaijuPlayer1: Phaser.GameObjects.Sprite;
     kaijuPlayer2: Phaser.GameObjects.Sprite;
+    trash2: Phaser.GameObjects.Sprite;
     constructor ()
     {
         super('MainScene');
@@ -71,7 +72,8 @@ export default class MainScene extends Phaser.Scene
         this.load.image('kaijuWin', 'assets/city/kaijuWin.png');
 
         // Load the obstacles.
-        this.load.image('car', 'assets/city/car.png');
+        this.load.image('trash', 'assets/city/trash.png');
+        this.load.image('trash2', 'assets/city/trash2.png');
 
         // Load the characters.
         this.load.image('mecha', 'assets/city/mech.png');
@@ -128,8 +130,13 @@ export default class MainScene extends Phaser.Scene
 
         const objectPosition : number = 800;
 
-        this.car = this.add.sprite(objectPosition, 550, 'car');
-        this.car.setScale(0.10);
+        this.trash = this.add.sprite(objectPosition, 550, 'trash');
+        this.trash.setScale(0.10);
+
+        this.trash2 = this.add.sprite(objectPosition, 550, 'trash2');
+        this.trash2.setScale(0.10);
+
+        this.trash2.setVisible(false);
 
         this.mecha = this.add.sprite(160, 450, 'mecha');
         this.mecha.setScale(0.15);
@@ -491,20 +498,20 @@ export default class MainScene extends Phaser.Scene
     {
 
         // Check if the kaiju or mecha has collided with an obstacle.
-        if (this.kaiju.x >= (this.car.x - 100)) {
+        if (this.kaiju.x >= (this.trash.x - 100)) {
             if (this.objectDestroyed === false) {
                 this.kaiju.setVisible(false);
                 this.kaiju2.setVisible(true);
-                this.kaiju.x = (this.car.x - 120);
+                this.kaiju.x = (this.trash.x - 120);
                 objectHits++;
             }
         }
 
-        if (this.mecha.x >= (this.car.x - 100)) {
+        if (this.mecha.x >= (this.trash.x - 100)) {
             if (this.objectDestroyed === false) {
                 this.mecha.setVisible(false);
                 this.mecha2.setVisible(true);
-                this.mecha.x = (this.car.x - 120);
+                this.mecha.x = (this.trash.x - 120);
                 objectHits++;
             }
         }
@@ -516,7 +523,8 @@ export default class MainScene extends Phaser.Scene
             this.mecha2.setVisible(false);
             this.kaiju.setVisible(true);
             this.kaiju2.setVisible(false);
-            this.car.destroy();
+            this.trash.destroy();
+            this.trash2.setVisible(true);
         }
 
         // Check if the kaiju or mecha has reached the end of the track.
