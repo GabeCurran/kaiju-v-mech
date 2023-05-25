@@ -12,6 +12,8 @@
 
 import * as Phaser from 'phaser';
 
+let objectHits = 0;
+
 export default class MainScene extends Phaser.Scene
 {
     kaiju: Phaser.GameObjects.Sprite;
@@ -219,7 +221,6 @@ export default class MainScene extends Phaser.Scene
         this.kaijuWin.setVisible(false);
 
         this.objectDestroyed = false;
-        this.objectHits = 0;
 
         let p1Button: string;
         let p2Button: string;
@@ -314,7 +315,7 @@ export default class MainScene extends Phaser.Scene
                         }
                     }
                 // If the player pressed the wrong button, move them backwards.
-                } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false && this.objectHits === 0) {
+                } else if (p1ButtonList.indexOf(button) !== -1 && buttonStates[0] === false && objectHits === 0) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -332,7 +333,7 @@ export default class MainScene extends Phaser.Scene
                             p2Pressed = true;
                         }
                     }
-                } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false && this.objectHits === 0) {
+                } else if (p2ButtonList.indexOf(button) !== -1 && buttonStates[1] === false && objectHits === 0) {
                     if (kaiju.x > 280) {
                         kaiju.x -= 200;
                     } else {
@@ -349,7 +350,7 @@ export default class MainScene extends Phaser.Scene
                             p3Pressed = true;
                         }
                     }
-                } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false && this.objectHits === 0) {
+                } else if (p3ButtonList.indexOf(button) !== -1 && buttonStates[2] === false && objectHits === 0) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -366,7 +367,7 @@ export default class MainScene extends Phaser.Scene
                             p4Pressed = true;
                         }
                     }
-                } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false && this.objectHits === 0) {
+                } else if (p4ButtonList.indexOf(button) !== -1 && buttonStates[3] === false && objectHits === 0) {
                     if (mecha.x > 280) {
                         mecha.x -= 200;
                     } else {
@@ -458,7 +459,7 @@ export default class MainScene extends Phaser.Scene
                 this.kaiju.setVisible(false);
                 this.kaiju2.setVisible(true);
                 this.kaiju.x = (this.car.x - 120);
-                this.objectHits++;
+                objectHits++;
             }
         }
 
@@ -467,13 +468,13 @@ export default class MainScene extends Phaser.Scene
                 this.mecha.setVisible(false);
                 this.mecha2.setVisible(true);
                 this.mecha.x = (this.car.x - 120);
-                this.objectHits++;
+                objectHits++;
             }
         }
 
-        if (this.objectHits >= 3) {
+        if (objectHits >= 3) {
             this.objectDestroyed = true;
-            this.objectHits = 0;
+            objectHits = 0;
             this.mecha.setVisible(true);
             this.mecha2.setVisible(false);
             this.kaiju.setVisible(true);
