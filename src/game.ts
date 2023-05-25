@@ -113,8 +113,8 @@ export default class MainScene extends Phaser.Scene
 
         this.load.image('9', 'assets/buttons/abxy/x.png');
         this.load.image('8', 'assets/buttons/abxy/y.png');
-        this.load.image('7', 'assets/buttons/abxy/a.png');
-        this.load.image('6', 'assets/buttons/abxy/b.png');
+        this.load.image('7', 'assets/buttons/abxy/b.png');
+        this.load.image('6', 'assets/buttons/abxy/a.png');
 
         // Set the game start to false.
         this.gameStart = false;
