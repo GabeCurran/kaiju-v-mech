@@ -44,6 +44,16 @@ export default class MainScene extends Phaser.Scene
     objectHits: number;
     mecha2: Phaser.GameObjects.Sprite;
     kaiju2: Phaser.GameObjects.Sprite;
+    mechaTeam: Phaser.GameObjects.Sprite;
+    kaijuTeam: Phaser.GameObjects.Sprite;
+    player1: Phaser.GameObjects.Sprite;
+    player2: Phaser.GameObjects.Sprite;
+    player3: Phaser.GameObjects.Sprite;
+    player4: Phaser.GameObjects.Sprite;
+    mechaPlayer1: Phaser.GameObjects.Sprite;
+    mechaPlayer2: Phaser.GameObjects.Sprite;
+    kaijuPlayer1: Phaser.GameObjects.Sprite;
+    kaijuPlayer2: Phaser.GameObjects.Sprite;
     constructor ()
     {
         super('MainScene');
@@ -67,30 +77,42 @@ export default class MainScene extends Phaser.Scene
         this.load.image('mecha', 'assets/city/mech.png');
         this.load.image('kaiju', 'assets/city/kaiju.png');
 
+        this.load.image('mechaPlayer1', 'assets/city/players/mechaPlayer1.png');
+        this.load.image('mechaPlayer2', 'assets/city/players/mechaPlayer2.png');
+
+        this.load.image('kaijuPlayer1', 'assets/city/players/kaijuPlayer1.png');
+        this.load.image('kaijuPlayer2', 'assets/city/players/kaijuPlayer2.png');
+
+        // Load player titles.
+        this.load.image('player1', 'assets/city/players/player1.png');
+        this.load.image('player2', 'assets/city/players/player2.png');
+        this.load.image('player3', 'assets/city/players/player3.png');
+        this.load.image('player4', 'assets/city/players/player4.png');
+
         // Load the character animations.
         this.load.image('mecha2', 'assets/city/mech2.png');
         this.load.image('kaiju2', 'assets/city/kaiju2.png');
 
         // Load the buttons.
-        this.load.image('w', 'assets/buttons/w.png');
-        this.load.image('a', 'assets/buttons/a.png');
-        this.load.image('s', 'assets/buttons/s.png');
-        this.load.image('d', 'assets/buttons/d.png');
+        this.load.image('w', 'assets/buttons/wasd/w.png');
+        this.load.image('a', 'assets/buttons/wasd/a.png');
+        this.load.image('s', 'assets/buttons/wasd/s.png');
+        this.load.image('d', 'assets/buttons/wasd/d.png');
 
-        this.load.image('1', 'assets/buttons/1.png');
-        this.load.image('2', 'assets/buttons/2.png');
-        this.load.image('3', 'assets/buttons/3.png');
-        this.load.image('4', 'assets/buttons/4.png');
+        this.load.image('1', 'assets/buttons/dpad/padUp.png');
+        this.load.image('2', 'assets/buttons/dpad/padLeft.png');
+        this.load.image('3', 'assets/buttons/dpad/padDown.png');
+        this.load.image('4', 'assets/buttons/dpad/padRight.png');
 
-        this.load.image('ArrowUp', 'assets/buttons/up.png');
-        this.load.image('ArrowLeft', 'assets/buttons/left.png');
-        this.load.image('ArrowDown', 'assets/buttons/down.png');
-        this.load.image('ArrowRight', 'assets/buttons/right.png');
+        this.load.image('ArrowUp', 'assets/buttons/arrows/arrowUp.png');
+        this.load.image('ArrowLeft', 'assets/buttons/arrows/arrowLeft.png');
+        this.load.image('ArrowDown', 'assets/buttons/arrows/arrowDown.png');
+        this.load.image('ArrowRight', 'assets/buttons/arrows/arrowRight.png');
 
-        this.load.image('9', 'assets/buttons/9.png');
-        this.load.image('8', 'assets/buttons/8.png');
-        this.load.image('7', 'assets/buttons/7.png');
-        this.load.image('6', 'assets/buttons/6.png');
+        this.load.image('9', 'assets/buttons/abxy/x.png');
+        this.load.image('8', 'assets/buttons/abxy/y.png');
+        this.load.image('7', 'assets/buttons/abxy/a.png');
+        this.load.image('6', 'assets/buttons/abxy/b.png');
 
         // Set the game start to false.
         this.gameStart = false;
@@ -129,44 +151,44 @@ export default class MainScene extends Phaser.Scene
         // Create the buttons and button sprites.
 
         // Player 1 buttons.
-        this.w = this.add.sprite(200, 750, 'w');
-        this.w.setScale(1.5);
-        this.a = this.add.sprite(120, 830, 'a');
-        this.a.setScale(1.5);
-        this.s = this.add.sprite(200, 830, 's');
-        this.s.setScale(1.5);
-        this.d = this.add.sprite(280, 830, 'd');
-        this.d.setScale(1.5);
+        this.w = this.add.sprite(200, 820, 'w');
+        this.w.setScale(0.25);
+        this.a = this.add.sprite(120, 900, 'a');
+        this.a.setScale(0.25);
+        this.s = this.add.sprite(200, 900, 's');
+        this.s.setScale(0.25);
+        this.d = this.add.sprite(280, 900, 'd');
+        this.d.setScale(0.25);
         
         // Player 2 buttons.
-        this.one = this.add.sprite(520, 750, '1');
-        this.one.setScale(1.5);
-        this.two = this.add.sprite(440, 830, '2');
-        this.two.setScale(1.5);
-        this.three = this.add.sprite(520, 830, '3');
-        this.three.setScale(1.5);
-        this.four = this.add.sprite(600, 830, '4');
-        this.four.setScale(1.5);
+        this.one = this.add.sprite(520, 820, '1');
+        this.one.setScale(0.25);
+        this.two = this.add.sprite(460, 870, '2');
+        this.two.setScale(0.25);
+        this.three = this.add.sprite(520, 920, '3');
+        this.three.setScale(0.25);
+        this.four = this.add.sprite(580, 870, '4');
+        this.four.setScale(0.25);
         
         // Player 3 buttons.
-        this.up = this.add.sprite(880, 750, 'ArrowUp');
-        this.up.setScale(1.5);
-        this.left = this.add.sprite(800, 830, 'ArrowLeft');
-        this.left.setScale(1.5);
-        this.down = this.add.sprite(880, 830, 'ArrowDown');
-        this.down.setScale(1.5);
-        this.right = this.add.sprite(960, 830, 'ArrowRight');
-        this.right.setScale(1.5);
+        this.up = this.add.sprite(880, 820, 'ArrowUp');
+        this.up.setScale(0.25);
+        this.left = this.add.sprite(800, 900, 'ArrowLeft');
+        this.left.setScale(0.25);
+        this.down = this.add.sprite(880, 900, 'ArrowDown');
+        this.down.setScale(0.25);
+        this.right = this.add.sprite(960, 900, 'ArrowRight');
+        this.right.setScale(0.25);
         
         // Player 4 buttons.
-        this.nine = this.add.sprite(1240, 750, '9');
-        this.nine.setScale(1.5);
-        this.eight = this.add.sprite(1160, 830, '8');
-        this.eight.setScale(1.5);
-        this.seven = this.add.sprite(1240, 830, '7');
-        this.seven.setScale(1.5);
-        this.six = this.add.sprite(1320, 830, '6');
-        this.six.setScale(1.5);
+        this.nine = this.add.sprite(1240, 820, '9');
+        this.nine.setScale(0.25);
+        this.eight = this.add.sprite(1180, 870, '8');
+        this.eight.setScale(0.25);
+        this.seven = this.add.sprite(1240, 920, '7');
+        this.seven.setScale(0.25);
+        this.six = this.add.sprite(1300, 870, '6');
+        this.six.setScale(0.25);
 
         // Create group for the buttons.
         this.buttons = this.add.group();
@@ -199,22 +221,37 @@ export default class MainScene extends Phaser.Scene
         let kaiju = this.kaiju;
         let mecha = this.mecha;
 
-        // Create the text for the game
-        this.add.text(160, 680, 'Player 1', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(480, 680, 'Player 2', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(840, 680, 'Player 3', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
-        this.add.text(1200, 680, 'Player 4', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
+        this.kaijuPlayer1 = this.add.sprite(200, 680, 'kaijuPlayer1');
+        this.kaijuPlayer1.setScale(0.25);
 
-        // Create the team names, Kaiju between Player 1 and Player 2, and Mecha between Player 3 and Player 4.
-        this.add.text(290, 650, 'Team Kaiju', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
-        this.add.text(980, 650, 'Team Mecha', { fontFamily: 'Arial', fontSize: 28, color: '#000000' });
+        this.kaijuPlayer2 = this.add.sprite(520, 680, 'kaijuPlayer2');
+        this.kaijuPlayer2.setScale(0.25);
+
+        this.mechaPlayer1 = this.add.sprite(880, 680, 'mechaPlayer1');
+        this.mechaPlayer1.setScale(0.25);
+
+        this.mechaPlayer2 = this.add.sprite(1240, 680, 'mechaPlayer2');
+        this.mechaPlayer2.setScale(0.25);
+
+        // Create the player titles.
+        this.player1 = this.add.sprite(200, 750, 'player1');
+        this.player1.setScale(0.15);
+
+        this.player2 = this.add.sprite(520, 750, 'player2');
+        this.player2.setScale(0.15);
+
+        this.player3 = this.add.sprite(880, 750, 'player3');
+        this.player3.setScale(0.15);
+
+        this.player4 = this.add.sprite(1240, 750, 'player4');
+        this.player4.setScale(0.15);
 
         // Create the win screens.
         this.mechaWin = this.add.sprite(740, 450, 'mechaWin');
-        this.mechaWin.setScale(0.50);
+        this.mechaWin.setScale(0.5);
 
         this.kaijuWin = this.add.sprite(740, 450, 'kaijuWin');
-        this.kaijuWin.setScale(0.50);
+        this.kaijuWin.setScale(0.5);
 
         // Hide the win screens.
         this.mechaWin.setVisible(false);
